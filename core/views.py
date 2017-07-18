@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import ContactForm
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse_lazy
+from django.contrib import messages
 
 #def index(request):
 
@@ -23,24 +24,17 @@ class IndexView(TemplateView):
 index = IndexView.as_view()
 
 def contact(request):
-
-    if request.method == 'POST':
-
-        form = ContactForm(request.POST)
-
-    else:
-
-        form = ContactForm()
-
+    success = False
+    form = ContactForm(request.POST or None)
+    if form.is_valid():
+        success = True
+    elif request.method == 'POST':
+        messages.error(request, 'Formulário inválido')
     context = {
-
-        'form': form
-
-
+        'form': form,
+        'success': success
     }
-
     return render(request, 'contact.html', context)
-
 
 def product_list(request):
     return render(request, 'product_list.html')
