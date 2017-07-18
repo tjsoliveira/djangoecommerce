@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
+{% load pagination %}
+
 {% block title %}
     {{ current_category }} | {{ block.super }}
 {% endblock %}
-
-{% load pagination %}
 
 {% block container %}
 <div class="page-header">
@@ -12,7 +12,7 @@
 </div>
 <div class="row">
     {% for product in product_list %}
-     {% include "catalog/add_product.html "%}
+    {% include "catalog/_product.html" %}
     {% endfor %}
 </div>
 
